@@ -7,21 +7,11 @@ module "eks" {
 
   cluster_endpoint_public_access  = true
 
-  cluster_addons = {
-    coredns = {
-      most_recent = true
-    }
-    kube-proxy = {
-      most_recent = true
-    }
-    vpc-cni = {
-      most_recent = true
-    }
-  }
+  cluster_addons = {}
 
-  vpc_id                   = "vpc-1234556abcdef"
-  subnet_ids               = ["subnet-abcde012", "subnet-bcde012a", "subnet-fghi345a"]
-  control_plane_subnet_ids = ["subnet-xyzde987", "subnet-slkjf456", "subnet-qeiru789"]
+  vpc_id                   = var.vpc_id
+  subnet_ids               = var.subnet_ids
+  control_plane_subnet_ids = var.subnet_ids
 
   # Self Managed Node Group(s)
   self_managed_node_group_defaults = {
@@ -92,3 +82,6 @@ module "eks" {
   # aws-auth configmap
   manage_aws_auth_configmap = true
 }
+
+variable vpc_id {}
+variable subnet_ids {}
